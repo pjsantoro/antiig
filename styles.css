@@ -1,0 +1,26 @@
+/* Hide filtered elements — use visibility+size instead of display:none
+   so Instagram's layout/scroll logic doesn't detect removed elements
+   and trigger a page re-render */
+[data-antiig-hidden] {
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* "Suggested Posts" cutoff — hide this element and all siblings after it */
+[data-antiig-cutoff],
+[data-antiig-cutoff] ~ * {
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
