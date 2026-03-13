@@ -24,3 +24,8 @@
   margin: 0 !important;
   border: none !important;
 }
+
+/* Nav links — display:none is safe here since they're not in the feed */
+[data-antiig-nav-hidden] {
+  display: none !important;
+}

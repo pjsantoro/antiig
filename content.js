@@ -72,6 +72,9 @@
     document.querySelectorAll(`[${CUTOFF_ATTR}]`).forEach((el) => {
       el.removeAttribute(CUTOFF_ATTR);
     });
+    document.querySelectorAll("[data-antiig-nav-hidden]").forEach((el) => {
+      el.removeAttribute("data-antiig-nav-hidden");
+    });
     cutoffNode = null;
   }
 
@@ -114,6 +117,12 @@
     for (const article of document.querySelectorAll("article")) {
       if (article.hasAttribute(HIDDEN_ATTR)) continue;
       if (confirmed.has(article)) continue;
+
+      // Skip articles inside modals/dialogs (post detail view)
+      if (article.closest('div[role="dialog"], div[role="presentation"]')) {
+        confirmed.add(article);
+        continue;
+      }
 
       // Everything after the cutoff is suggested content
       if (isAfterCutoff(article)) {
@@ -169,10 +178,10 @@
 
   function filterNavLinks() {
     for (const link of document.querySelectorAll('nav a[href]')) {
-      if (link.hasAttribute(HIDDEN_ATTR)) continue;
+      if (link.hasAttribute("data-antiig-nav-hidden")) continue;
       const text = link.textContent.trim().toLowerCase();
       if (NAV_HIDE_LABELS.some((label) => text === label)) {
-        hideElement(link);
+        link.setAttribute("data-antiig-nav-hidden", "");
       }
     }
   }
